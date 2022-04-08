@@ -16,6 +16,8 @@ public class pointGenerator : MonoBehaviour
 
     public List<Vector3> cubePositions = new List<Vector3>();
 
+    public bool clickable = true;
+
     void Start()
     {
 
@@ -23,37 +25,52 @@ public class pointGenerator : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKey(KeyCode.Mouse0))
-        {
-            if (points.Count == 0)
-                points.Add(Vector2.zero);
-            mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Vector2.Distance(mousePos, points[points.Count - 1]) > 1)
+        if (clickable)
+            if (Input.GetKey(KeyCode.Mouse0))
             {
-                if (points.Count < 20)
+
+                mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+                if (points.Count == 0)
+                    points.Add(new Vector2(0, -4));
+                else
+                    points[0] = new Vector2(0, -4);
+
+
+                if (Vector2.Distance(mousePos, points[points.Count - 1]) > 1f)
                 {
-                    points.Add(mousePos);
-                    squares.Add(Instantiate(sq, points[points.Count - 1], transform.rotation));
+                    if (points.Count < 40)
+                    {
+                        Vector2 dir = (mousePos - points[points.Count - 1]);
+
+                        points.Add(points[points.Count - 1] + (dir.normalized * 0.5f));
+
+                        squares.Add(Instantiate(sq, points[points.Count - 1], transform.rotation));
+                    }
+
                 }
-
             }
-        }
-
         for (int i = 0; i < squares.Count; i++)
         {
-            if (Vector2.Distance(squares[i].transform.position, new Vector2(0, -4)) < 0.1f)
+            if (Vector2.Distance(squares[i].transform.position, new Vector2(0, -4)) < 0.3f)
             {
                 Destroy(squares[i]);
                 squares.Remove(squares[i]);
                 points.Remove(points[i]);
             }
         }
+        if (Input.GetMouseButtonUp(0))
+            clickable = false;
+
 
         cubePositions = squares.Select(f => f.transform.position).ToList();
 
         lineR.positionCount = cubePositions.Count;
         lineR.SetPositions(cubePositions.ToArray());
         edgeCol.points = ConvertArray(cubePositions.ToArray());
+
+        if (points.Count <= 1)
+            clickable = true;
     }
 
 

@@ -16,7 +16,7 @@ public class pointMover : MonoBehaviour
     {
         if (move)
         {
-            Vector2 dir = (new Vector2(0, -4) - (Vector2)transform.position).normalized;
+            Vector2 dir = (new Vector2(0, -4.5f) - (Vector2)transform.position).normalized;
             rb.AddForce(dir * 1);
         }
 

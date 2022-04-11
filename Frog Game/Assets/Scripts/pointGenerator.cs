@@ -32,9 +32,9 @@ public class pointGenerator : MonoBehaviour
                 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
                 if (points.Count == 0)
-                    points.Add(new Vector2(0, -4));
+                    points.Add(new Vector2(0, -4.5f));
                 else
-                    points[0] = new Vector2(0, -4);
+                    points[0] = new Vector2(0, -4.5f);
 
 
                 if (Vector2.Distance(mousePos, points[points.Count - 1]) > 1f)
@@ -52,7 +52,7 @@ public class pointGenerator : MonoBehaviour
             }
         for (int i = 0; i < squares.Count; i++)
         {
-            if (Vector2.Distance(squares[i].transform.position, new Vector2(0, -4)) < 0.3f)
+            if (Mathf.Abs(squares[i].transform.position.x) < 2.2f && squares[i].transform.position.y <= -4.5f && !clickable)
             {
                 Destroy(squares[i]);
                 squares.Remove(squares[i]);

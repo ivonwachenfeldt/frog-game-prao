@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Tongue
   - Fly
+  - PlayButton
+  - SettingsButton
+  - TitleButton
   layers:
   - Default
   - TransparentFX
@@ -40,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Back of Frog
+    uniqueID: 4187578767
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0

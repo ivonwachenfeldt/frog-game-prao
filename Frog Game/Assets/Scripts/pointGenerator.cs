@@ -25,6 +25,8 @@ public class pointGenerator : MonoBehaviour
 
     void Update()
     {
+        if (squares.Count == 7 || squares.Count == 6)
+            GameObject.FindObjectOfType<AudioManager>().Play("Slurp");
         if (clickable)
             if (Input.GetKey(KeyCode.Mouse0))
             {
@@ -42,10 +44,12 @@ public class pointGenerator : MonoBehaviour
                     if (points.Count < 40)
                     {
                         Vector2 dir = (mousePos - points[points.Count - 1]);
+                        if (Vector2.Distance(points[points.Count - 1] + (dir.normalized * 0.5f), new Vector2(-3.5f, -4)) > 1 && Vector2.Distance(points[points.Count - 1] + (dir.normalized * 0.5f), new Vector2(3.5f, -4)) > 1)
+                        {
+                            points.Add(points[points.Count - 1] + (dir.normalized * 0.5f));
 
-                        points.Add(points[points.Count - 1] + (dir.normalized * 0.5f));
-
-                        squares.Add(Instantiate(sq, points[points.Count - 1], transform.rotation));
+                            squares.Add(Instantiate(sq, points[points.Count - 1], transform.rotation));
+                        }
                     }
 
                 }
@@ -71,6 +75,21 @@ public class pointGenerator : MonoBehaviour
 
         if (points.Count <= 1)
             clickable = true;
+
+        if (clickable)
+        {
+            for (int i = 0; i < squares.Count; i++)
+            {
+                if (!squares[i].GetComponent<DistanceJoint2D>())
+                    if (i > 1)
+                    {
+                        DistanceJoint2D dj = squares[i].AddComponent<DistanceJoint2D>();
+                        dj.connectedBody = squares[i - 1].GetComponent<Rigidbody2D>();
+                        dj.maxDistanceOnly = true;
+                    }
+
+            }
+        }
     }
 
 

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class titleScreen : MonoBehaviour
 {
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,12 +21,18 @@ public class titleScreen : MonoBehaviour
     {
         if (col.tag == "PlayButton")
         {
-            SceneManager.LoadScene("Game");
+            StartCoroutine(sceneLoader("Game"));
         }
         if (col.tag == "SettingsButton")
-            SceneManager.LoadScene("Settings");
+            StartCoroutine(sceneLoader("Settings"));
         if (col.tag == "TitleButton")
-            SceneManager.LoadScene("Title");
+            StartCoroutine(sceneLoader("Title"));
+    }
+    IEnumerator sceneLoader(string scene)
+    {
+        animator.SetTrigger("Close");
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(scene);
     }
 
 }

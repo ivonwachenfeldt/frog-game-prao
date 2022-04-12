@@ -5,18 +5,26 @@ using UnityEngine;
 public class spawnManager : MonoBehaviour
 {
     public GameObject fly;
+    public GameObject bomb;
     void Start()
     {
         //InvokeRepeating("GenerateFly", 1f, 1f);
     }
 
-
+    int counter;
     void Update()
     {
-        if (GameObject.FindGameObjectsWithTag("Fly").Length <= 150)
+        if (counter == 100)
         {
-            GenerateFly();
+            if (GameObject.FindGameObjectsWithTag("Fly").Length <= 15)
+            {
+                GenerateFly();
+                counter = 0;
+            }
         }
+        else counter++;
+
+
     }
     Vector2 coords;
     int randomized;
@@ -29,7 +37,12 @@ public class spawnManager : MonoBehaviour
             coords = new Vector2(-10, Random.Range(-2.5f, 4.5f));
         if (randomized == 2)
             coords = new Vector2(Random.Range(-8.5f, 8.5f), 5);
-        Instantiate(fly, coords, transform.rotation);
+        if (Random.Range(1, 20) == 19)
+        {
+            Instantiate(bomb, coords, transform.rotation);
+        }
+        else
+            Instantiate(fly, coords, transform.rotation);
     }
 }
 

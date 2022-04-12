@@ -9,6 +9,8 @@ TagManager:
   - PlayButton
   - SettingsButton
   - TitleButton
+  - Transition
+  - Bomb
   layers:
   - Default
   - TransparentFX
@@ -16,7 +18,7 @@ TagManager:
   - Tongue
   - Water
   - UI
-  - 
+  - Background
   - 
   - 
   - 
@@ -48,4 +50,7 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UIExtraPanel
+    uniqueID: 2361436329
     locked: 0

@@ -19,6 +19,6 @@ public class sliderScript : MonoBehaviour
     void Update()
     {
         value = handle.transform.position.x - startingPoint.transform.position.x;
-        audioMixer.SetFloat("Volume", Mathf.Log10(value) * 20);
+        audioMixer.SetFloat("volume", Mathf.Log10(value) * 20);
     }
 }
